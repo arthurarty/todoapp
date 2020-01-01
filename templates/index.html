@@ -10,5 +10,13 @@
             <li>{{ d.description }}</li>
             {% endfor %}
         </ul>
+        <h2>
+            Add new item to list
+        </h2>
+        <form action='/todos/create' method="POST">
+            Enter description: <br>
+            <input type="text" name="description" />
+            <input type="submit" value="submit" />
+        </form>
     </body>
 </html>
