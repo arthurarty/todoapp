@@ -3,12 +3,61 @@
         <title>
             Todo App
         </title>
+<<<<<<< HEAD
     </head>
     <body>
         <ul>
+=======
+        <style> 
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="error" class="hidden">
+            Something went wrong!
+        </div>
+        <ul id="todos">
+>>>>>>> 0d02083ed22a23852b7e1fe0b401a8f8022737cf
             {% for d in data %}
             <li>{{ d.description }}</li>
             {% endfor %}
         </ul>
+<<<<<<< HEAD
+=======
+        <h2>
+            Add new item to list
+        </h2>
+        <form id="form" >
+            Enter description: <br>
+            <input type="text" id='description' name="description" />
+            <input type="submit" value="submit" />
+        </form>
+        <script>
+            document.getElementById('form').onsubmit = function(e) {
+                e.preventDefault();
+                fetch('/todos/create', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'description': document.getElementById('description').value
+                    }),
+                    headers: {
+                        'Content-Type':'application/json'
+                    }
+                }).then(function(response) {
+                    return response.json();
+                }).then(function(jsonResponse) {
+                    console.log(jsonResponse);
+                    const liItem = document.createElement('LI');
+                    liItem.innerHTML = jsonResponse['description'];
+                    document.getElementById('todos').appendChild(liItem);
+                    document.getElementById('error').className = 'hidden';
+                }).catch(function(){
+                    document.getElementById('error').className = '';
+                })
+            }
+        </script>
+>>>>>>> 0d02083ed22a23852b7e1fe0b401a8f8022737cf
     </body>
 </html>
