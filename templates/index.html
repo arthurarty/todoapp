@@ -11,7 +11,7 @@
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                width: 300px;
+                width: 200px;
             }
             li {
                 clear: both;
@@ -40,6 +40,7 @@
             <li>
                 <input type="checkbox" data-id="{{ d.id}}" class="check-completed" {% if d.completed %} checked {% endif %}>
                 {{ d.description }}
+                <button class="removeButton" data-id="{{ d.id}}">&cross;</button>
             </li>
             {% endfor %}
         </ul>
@@ -73,6 +74,23 @@
                     .catch(function(){
                     document.getElementById('error').className = '';
                 })
+                }
+            }
+            const deleteButtons = document.querySelectorAll('.removeButton');
+            for (let i=0; i < deleteButtons.length; i++){
+                const deleteButton =  deleteButtons[i];
+                deleteButton.onclick = function(e) {
+                    console.log('Delete called');
+                    const todoId = e.target.dataset['id'];
+                    fetch('todos/' + todoId + '/delete', {
+                        method: 'DELETE',
+                    })
+                    .then(function() {
+                        document.getElementById('error').className = 'hidden';
+                    })
+                    .catch(function(){
+                    document.getElementById('error').className = '';
+                    })
                 }
             }
             document.getElementById('form').onsubmit = function(e) {
