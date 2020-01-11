@@ -11,7 +11,7 @@
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                width: 200px;
+                width: 300px;
             }
             li {
                 clear: both;
@@ -35,23 +35,34 @@
         <div id="error" class="hidden">
             Something went wrong!
         </div>
-        <ul id="todos">
-            {% for d in data %}
-            <li>
-                <input type="checkbox" data-id="{{ d.id}}" class="check-completed" {% if d.completed %} checked {% endif %}>
-                {{ d.description }}
-                <button class="removeButton" data-id="{{ d.id}}">&cross;</button>
-            </li>
-            {% endfor %}
-        </ul>
-        <h2>
-            Add new item to list
-        </h2>
-        <form id="form" >
-            Enter description: <br>
-            <input type="text" id='description' name="description" />
-            <input type="submit" value="submit" />
-        </form>
+        <div class="lists-wrapper">
+            <ul id="lists">
+                {% for list in lists %}
+                <li>
+                    <a href="/lists/{{ list.id }}">
+                        {{ list.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="todos-wrapper">
+            <h4>{{ active_list.name }}</h4>
+            <form id="form" >
+                Create new list item: <br>
+                <input type="text" id='description' name="description" />
+                <input type="submit" value="Create" />
+            </form>
+            <ul id="todos">
+                {% for todo in todos %}
+                <li>
+                    <input type="checkbox" data-id="{{ todo.id}}" class="check-completed" {% if todo.completed %} checked {% endif %}>
+                    {{ todo.description }}
+                    <button class="removeButton" data-id="{{ todo.id}}">&cross;</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         <script>
             const checkboxes = document.querySelectorAll('.check-completed');
             for (let i=0; i < checkboxes.length; i++){
